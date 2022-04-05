@@ -12,25 +12,22 @@ def int_list_input(seperator: str = ' ') -> List[int]:
     '''Used to get integer list in a line'''
     return list( map(int, list_input(seperator)))
 
-
 class Solution:
-    def longestValidParentheses(self, s: str) -> int:
+    def searchInsert(self, nums: List[int], target: int) -> int:
         
+        start = 0
+        end = len(nums)
 
-        stack = [-1]
-        max_length = 0
+        while start < end:
 
-        for index, char in enumerate(s):
+            mid = (start + end) // 2
 
-            if char == "(":
-                stack.append(index)
+            if nums[mid] == target:
+                return mid
+
+            elif nums[mid] < target:
+                start = mid + 1
             else:
-                stack.pop()
-
-                if not stack:
-                    stack.append(index)
-                else:
-                    max_length = max(index - stack[-1], max_length)
+                end = mid
         
-        return max_length
-        
+        return start
