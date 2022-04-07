@@ -1,3 +1,4 @@
+from socket import if_indextoname
 from typing import Any, Dict, List, Optional
 
 def int_input()-> int:
@@ -27,62 +28,64 @@ def item_counter(items: List[Any]) -> Dict:
 
 
 class Solution:
-    def correct_index(self, nums: List[int], start: int, end: int, target: int):
+
+    def binaryLTE(self, start, end, array, target):
 
         while start < end:
-            mid = (start + end) // 2
-            if nums[mid] == target:
+
+            mid = (start + end) //2
+
+            if array[mid] == target:
                 return mid
-            elif target < nums[mid]:
+            elif target < array[mid]:
                 end = mid
             else:
-                start = mid + 1
-        return start
-          
+                start += 1
+
+        return start - 1
+
+    def mycombination(self, candidates, target):
+
+        Answers = []
+
+        last_index = self.binaryLTE(0, len(candidates), candidates, target)
+
+        for index in range(last_index + 1):
+            val = candidates[index]
+            temp_target = target - val
+
+            if temp_target < 0:
+                break
+            elif temp_target == 0:
+                Answers.append([val])
+                break
+            else:
+
+                if temp_target not in self.answer_dict:
+                    new_target_possible = self.combinationSum(candidates, temp_target)
+                else:
+                    new_target_possible = self.answer_dict[temp_target]
+                if  new_target_possible:
+                    for item in new_target_possible:
+                        temp_answer = [val] + item
+                        temp_answer.sort()
+                        if temp_answer not in Answers:
+                            Answers.append(temp_answer)
+
+        self.answer_dict[target] = Answers
+        return Answers
+    
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        """
+        Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+        The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+        It is guaranteed that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+        """
         
-        if not candidates:
-            return []
-
         candidates.sort()
-        length = len(candidates)
-        starting_index = self.correct_index(candidates, 0, length,target )
-
-        if candidates[starting_index] > target:
-            starting_index -= 1
+        self.answer_dict = {}
+        return self.mycombination(candidates, target)
         
-        answer = []
-
-        while starting_index > -1:
-
-            current_index = starting_index
-            current_target = target
-            ans = []
-            print('----')
-            while current_target:
-                item = candidates[current_index]
-                times = current_target // item
-                remainder = current_target % item
-                ans += [item] * times
 
 
-                print(current_target, item, times, remainder )
-                current_target = remainder 
-
-
-                if current_target== 0:
-                    break
-
-                current_index = self.correct_index(candidates, 0, current_index, current_target)
-
-                if candidates[current_index] > current_target:
-                    current_index -= 1
-
-                if current_index < 0:
-                    break
-            if current_target == 0:
-                answer.append(ans)
-            print()
-
-            starting_index -= 1
-        return answer
+# print(Solution().combinationSum([2,2,2,2,2,2,3,3,3,3],12))
