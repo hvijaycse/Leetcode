@@ -29,54 +29,33 @@ def item_counter(items: List[Any]) -> Dict:
     return item_count
 
 class Solution:
-    def BinaryLTE(self, start: int,end: int, nums: List[int], target: int) -> int:
-
-        while start < end:
-            mid = (start + end) // 2
-
-            if nums[mid] == target:
-                return mid
-            
-            elif target < nums[mid]:
-                end = mid
-            else:
-                start = mid + 1
-        
-        return start - 1
-
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        """
-        Not solved
-        """
-        
-        candidates.sort()
+
+        def bfs(i: int, max: int, target: int , path: List[int]):
+            # print(i, target)
+            if i == max:
+                return 
+            else:
+                index = i
+                for index in range(i, max):
+
+                    if index > i and candidates[index] == candidates[index - 1]:
+                        continue
+                    val = candidates[index]
+                    new_target = target - val
+                    if new_target < 0:
+                        continue
+                    if new_target == 0:
+                        answers.append(list(path) + [val])
+                    else:
+                        path.append(val)
+                        bfs(index+1, max, new_target, path)
+                        path.pop()
         answers = []
-        self.bfs(candidates, 0, len(candidates), target, answers)
+        candidates.sort()
+        bfs(0, len(candidates), target, [])
 
         return answers
-    
-    def bfs(self, candidates: List[int], start: int, end: int, target: int, path: List[List[int]]) -> None:
 
-        if target < 0:
-          return
-        
-        for index in range(start, end):
 
-            val = candidates[index]
-
-            diff = target - val
-
-            if diff == 0:
-                if [val] not in path:
-                    path.append([val])
-            else:
-                path_for_diff = []
-
-                self.bfs(candidates, index + 1, end, diff, path_for_diff)
-
-                if path_for_diff:
-                    for p in path_for_diff:
-                        temp = [val] + p
-                        if temp not in path:
-                            path.append(temp)
-                    
+print(Solution().combinationSum2([10,1,2,7,6,1,5],8))
