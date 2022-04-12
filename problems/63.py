@@ -38,17 +38,20 @@ class Solution:
             return 0 
 
         obstacleGrid[0][0] = 1
+        assign = 1
         for index in range(1,columns):
             if obstacleGrid[0][index] == 1:
                 obstacleGrid[0][index] = -1
-                break
-            obstacleGrid[0][index] = 1
+                assign = -1
+            obstacleGrid[0][index] = assign
         
+        assign = 1
         for index in range(1, rows):
             if obstacleGrid[index][0] == 1:
                 obstacleGrid[index][0] = -1
-                break
-            obstacleGrid[index][0] = 1
+                assign = -1
+
+            obstacleGrid[index][0] = assign
         
 
         for r in range(1, rows):
@@ -64,7 +67,5 @@ class Solution:
                 left = max(left, 0)
 
                 obstacleGrid[r][c] = upper + left
-        
-        # for row in obstacleGrid: print(row)
         
         return max(obstacleGrid[rows-1][columns -1], 0)
