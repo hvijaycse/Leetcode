@@ -3,12 +3,18 @@ from typing import List, Optional, Any, Dict
 
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
-        max_area = 0 
+        '''
+        monotonic stacks
+        '''
+        heights.append(0)
+        stack = [-1]
+        max_area = 0
+        for index in range(len(heights)):
 
-        for i in range(len(heights)):
-            for j in range(i, len(heights)):
-
-                min_height = min(heights[i:j+1])
-                max_area = max(max_area , min_height * (j-i+1))
-        
+            while heights[index] < heights[stack[-1]]:
+                height = heights[stack.pop()]
+                width = index - stack[-1] -1
+                max_area = max(max_area, height*width)
+            
+            stack.append(index)
         return max_area
