@@ -16,19 +16,28 @@ class Solution:
         new_head = ListNode(0, head)
 
         temp=new_head
-        prev = None
-        index = 0 
-        left_prev = None
-        right_next = None
+        index = 1  
+        LOL = None
 
-        while index <= right + 1:
-            if index == left-1:
-                left_prev = new_head
-            elif index == right+1:
-                right_next = new_head
-            elif left <= index <= right:
-                pass
-            else:
-                index += 1
-                prev = new_head
-                new_head.next = new_head
+        while index < left:
+            index += 1
+            temp = temp.next
+        
+        LOL = temp
+        LeftNode = temp.next
+
+        temp = temp.next
+        prev=None
+        
+        while index <= right:
+            index += 1
+            next_node = temp.next
+            temp.next = prev
+            prev = temp
+            temp = next_node
+        
+        LeftNode.next = temp
+        LOL.next = prev
+
+
+        return new_head.next
