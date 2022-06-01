@@ -1,6 +1,3 @@
-from lib2to3.pytree import Node
-from platform import node
-from turtle import left, right
 from typing import List, Optional, Any, Dict
 
 # Definition for a binary tree node.
@@ -30,10 +27,10 @@ class Solution:
                 
                 if left_node.right is None:
                     left_node.right = root
-                    root = left_node
+                    root = root.left
                 else:
                     left_node.right = None
                     path.append(root.val)
                     root = root.right
             
-            return path
+        return path
