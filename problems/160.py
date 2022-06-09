@@ -1,7 +1,7 @@
 from typing import List, Optional, Any, Dict
 
 
-Definition for singly-linked list.
+# Definition for singly-linked list.
 class ListNode:
     def __init__(self, x):
         self.val = x
