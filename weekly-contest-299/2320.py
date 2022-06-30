@@ -3,6 +3,8 @@ from typing import List, Optional, Any, Dict
 class Solution:
     def countHousePlacements(self, n: int) -> int:
         mod = 10**9 + 7
+
+        # no need for these array.
         placed = [0 for _ in range(n)]
         not_placed = [0 for _ in range(n)]
 
