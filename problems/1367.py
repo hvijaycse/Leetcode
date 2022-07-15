@@ -25,7 +25,7 @@ class Solution:
             if self.checkDFS(head, root):
                 return True
         
-        return self.checkDFS(head, root.left) or self.checkDFS(head, root.right)        
+        return self.isSubPath(head, root.left) or self.isSubPath(head, root.right)        
 
        
     
@@ -41,5 +41,5 @@ class Solution:
         if head.val != root.val:
             return False
         
-        return self.checkDFS(head.next, root.right) or self.checkDFS(head.next, root.left)
+        return self.checkDFS(head.next, root.left) or self.checkDFS(head.next, root.right)
             
